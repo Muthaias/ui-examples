@@ -9,7 +9,7 @@ export type Page = {
 
 export function usePagination<T>(items: T[], pageSize: number = 10, labels?: Record<"next" | "previous" | "first" | "last", string>) {
     const [pageNumber, setPageNumber] = useState<number>(0);
-    const pageItems = useMemo(() => items.slice(pageNumber * pageSize, pageNumber * pageSize + pageSize), [pageNumber, items])
+    const pageItems = useMemo(() => items.slice(pageNumber * pageSize, pageNumber * pageSize + pageSize), [pageNumber, items, pageSize])
     const numPages = Math.floor(items.length / pageSize);
     const pages = Array.from({length: numPages}).map<Page>((_, index) => ({
         href: String(index + 1),
