@@ -38,3 +38,7 @@ body {
   --bs-btn-disabled-bg: rgba(var(--bs-primary-rgb), 0.5) !important;
   --bs-btn-disabled-border-color: var(--bs-primary) !important;
 }
+
+.readable-text {
+  max-width: 80ch;
+}

@@ -16,8 +16,14 @@ type EntryPoint = {
 
 type LogEntry = {
   id: string;
-  content: string;
+  content: React.ReactNode;
   createdAt: string;
+}
+
+type NotificationEntry = {
+  id: string;
+  content: React.ReactNode,
+  priority: Notification["priority"]
 }
 
 export default function Overview() {
@@ -33,7 +39,11 @@ export default function Overview() {
     href: "Gå dit",
   };
 
-  const notificationList = notifications.all();
+  const notificationList = notifications.all().map<NotificationEntry>(n => ({
+    id: n.id,
+    priority: n.priority,
+    content: <div>{n.content}</div>
+  }));
   const notificationColumns: ColumnSpec<Notification> = {
     priority: "Prioritering",
     content: "Meddelande"
@@ -44,7 +54,7 @@ export default function Overview() {
     const person = people.get(user.person)
     return {
       id: l.id,
-      content: l.content,
+      content: <div className="readable-text">{l.content}</div>,
       createdAt: toLocalTime(l.createdAt),
       createdBy: person.fullName
     }
@@ -57,14 +67,22 @@ export default function Overview() {
   return (
     <>
       <h2>Översikt</h2>
-      <h3>Hantera</h3>
-      <Table items={entryPoints} columns={entryPointColumns} />
+      <div className="row g-5">
+        <div className="col col-12 col-md-6">
+          <h3>Hantera</h3>
+          <Table items={entryPoints} columns={entryPointColumns} />
+        </div>
 
-      <h3>Notifieringar</h3>
-      <Table items={notificationList} columns={notificationColumns} />
+        <div className="col col-12 col-md-6">
+          <h3>Notifieringar</h3>
+          <Table items={notificationList} columns={notificationColumns} />
+        </div>
 
-      <h3>Händelser</h3>
-      <Table items={logList} columns={logColumns} />
+        <div className="col col-12">
+          <h3>Händelser</h3>
+          <Table items={logList} columns={logColumns} />
+        </div>
+      </div>
     </>
   )
 }

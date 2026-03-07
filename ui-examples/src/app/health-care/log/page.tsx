@@ -9,7 +9,7 @@ import { toLocalDate } from "../utils";
 
 type LogTable = {
   id: string;
-  content: string;
+  content: React.ReactNode;
   recipient: React.ReactNode;
   createdAt: string;
 }
@@ -20,7 +20,7 @@ export default function Todo() {
     const recipient = users.get(l.recipient);
     return {
       id: l.id,
-      content: l.content,
+      content: <div className="readable-text">{l.content}</div>,
       recipient: <Link href={`/health-care/care-recipients/entry/?entryId=${recipient.username}`}>{recipient.username}</Link>,
       createdAt: toLocalDate(l.createdAt),
     }
